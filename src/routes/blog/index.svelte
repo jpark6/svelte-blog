@@ -1,6 +1,6 @@
 <!-- blog index-->
 
-<script context="module">
+<script context="module" lang="ts">
 // load function
 export const load = async({ fetch }) => {
   const posts = await fetch('/api/posts.json');

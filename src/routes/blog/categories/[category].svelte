@@ -1,8 +1,8 @@
-<script context="module">
+<script context="module" lang="ts">
 
 export const load = async ({ params, fetch }) => {
-  const currentCategory = params.category
-  const response = await fetch('/api/posts.json')
+  const currentCategory = params.category;
+  const response = await fetch('/api/posts.json');
   const posts = await response.json();
 
   const matchingPosts = posts
@@ -12,6 +12,6 @@ export const load = async ({ params, fetch }) => {
     props: {
       posts: matchingPosts
     }
-  }
+  };
 }
 </script>
