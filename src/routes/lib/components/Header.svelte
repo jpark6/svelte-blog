@@ -12,7 +12,7 @@
   </nav>
 </header>
 
-<style>
+<style lang="scss">
 header {
   padding: 1rem;
   background-color: lightskyblue;
