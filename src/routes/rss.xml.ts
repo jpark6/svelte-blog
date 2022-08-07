@@ -2,28 +2,30 @@ const siteURL = 'http://127.0.0.1:5173';
 const siteTitle = 'blog';
 const siteDescription = 'blog description';
 
-interface post {
-  site: string;
-  slug: string;
-  excerpt: string;
-  date: Date;
-}
+interface Post {
+  metadata: {
+    site: string;
+    slug: string;
+    excerpt: string;
+    date: Date;
+  };
+};
 
 export const GET = async () => {
   const posts = await Promise.all(
     Object.entries(import.meta.glob('./blog/*.md')).map(async ([path, resolver]) => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      const { metadata } = await resolver()
-      const slug = path.slice(2, -3)
-      return { ...metadata, slug }
+      const { metadata } : Post = await resolver();
+      const slug = path.slice(2, -3);
+      return { ...metadata, slug };
     })
   )
   .then(posts => {
     return posts.sort((a, b) => Number(new Date(b.date)) - Number(new Date(a.date)))
-  })
+  });
 
-  const body = render(posts)
+  const body = render(posts);
   const headers = {
     'Cache-Control': 'max-age=0, s-maxage=3600',
     'Content-Type': 'application/xml',
@@ -32,7 +34,7 @@ export const GET = async () => {
   return {
     body,
     headers,
-  }
+  };
 }
 
 const render = (posts) =>

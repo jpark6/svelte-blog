@@ -1,6 +1,12 @@
 <!-- Layout Component-->
-<script context="module">
-export const load = ({ url }) => {
+<script context="module" lang="ts">
+interface Url {
+  url: {
+    pathname: string;
+  }
+};
+
+export const load = ({ url } : Url) => {
   const currentRoute = url.pathname;
 
   return {
@@ -8,13 +14,13 @@ export const load = ({ url }) => {
       currentRoute
     }
   };
-}
+};
 </script>
 <script lang="ts">
 import Header from "./lib/components/Header.svelte";
 import './lib/styles/style.scss';
 import { fade } from 'svelte/transition';
-export let currentRoute;
+export let currentRoute:Url["url"]["pathname"];
 </script>
 
 <Header />

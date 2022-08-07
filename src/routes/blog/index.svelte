@@ -1,8 +1,23 @@
 <!-- blog index-->
 
+<!-- blog index-->
+
 <script context="module" lang="ts">
+interface Post {
+  path: string;
+  meta: {
+    title: string;
+    date: string;
+  };
+};
+
+interface FetchFunc {
+  fetch: (url: string) => {
+    json: () => Post[];
+  };
+};
 // load function
-export const load = async({ fetch }) => {
+export const load = async({ fetch }: FetchFunc ) => {
   const posts = await fetch('/api/posts.json');
   const allPosts = await posts.json();
 
@@ -14,8 +29,9 @@ export const load = async({ fetch }) => {
 }
 </script>
 
-<script>
-export let posts;
+<script lang="ts">
+
+export let posts: Post[];
 </script>
 
 <ul>
